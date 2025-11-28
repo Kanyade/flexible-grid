@@ -38,11 +38,34 @@ FlexibleGrid(
 
 | Parameter           | Description                                                                                                                                                                                                    |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `columnCount`       | Controls how many children are laid out in a row. Defaults to 2.                                                                                                                                               |
-| `verticalSpacing`   | Sets the vertical spacing between children. Defaults to 0.                                                                                                                                                     |
-| `horizontalSpacing` | Sets the horizontal spacing between children. Defaults to 0.                                                                                                                                                   |
+| `columnCount`       | Controls how many children are laid out in a row. Defaults to 2. Must be greater than 0.                                                                                                                       |
+| `verticalSpacing`   | Sets the vertical spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                             |
+| `horizontalSpacing` | Sets the horizontal spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                           |
 | `enforceRowHeight`  | Whether children are set to be the height of the row they are in or can be less. Note that e.g. Containers with fixed height will be stretched out to the row's height due to using `BoxConstraints.tightFor`. |
 | `children`          | Widgets to be displayed.                                                                                                                                                                                       |
+
+## FlexibleGridItemProxy
+
+To make a child span multiple columns, wrap it in a `FlexibleGridItemProxy` widget:
+
+```dart
+FlexibleGrid(
+  columnCount: 3,
+  children: [
+    FlexibleGridItemProxy(
+      columnSpan: 2,
+      child: Container(color: Colors.green, height: 100),
+    ),
+    Container(color: Colors.red, height: 75),
+    // ... more children
+  ],
+)
+```
+
+| Parameter    | Description                                                      |
+| ------------ | ---------------------------------------------------------------- |
+| `columnSpan` | Number of columns this item should span. Must be greater than 0. |
+| `child`      | The widget to display.                                           |
 
 ## License
 
