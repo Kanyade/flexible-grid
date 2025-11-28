@@ -1,0 +1,19 @@
+name: flexible_grid
+description: "A bare-bones flexible gridview for dynamic layouts."
+version: 0.1.0
+homepage: https://github.com/Kanyade/flexible-grid
+repository: https://github.com/Kanyade/flexible-grid
+
+environment:
+  sdk: ^3.1.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
