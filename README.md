@@ -23,21 +23,26 @@ FlexibleGrid(
 )
 ```
 
-`enforceRowHeight` is true
-<img src="example/flexible_grid_demo_enforced.png" alt="FlexibleGrid Demo" width="260">
-
-`enforceRowHeight` is false
-<img src="example/flexible_grid_demo.png" alt="FlexibleGrid Demo" width="260">
+<table>
+<tr>
+<td>When <code>enforceRowHeight</code> is true:</td>
+<td>When <code>enforceRowHeight</code> is false:</td>
+</tr>
+<tr>
+<td><img src="https://raw.githubusercontent.com/Kanyade/flexible-grid/refs/heads/master/example/flexible_grid_demo_enforced.png" alt="FlexibleGrid Demo Enforced" width="260"></td>
+<td><img src="https://raw.githubusercontent.com/Kanyade/flexible-grid/refs/heads/master/example/flexible_grid_demo.png" alt="FlexibleGrid Demo Unenforced" width="260"></td>
+</tr>
+</table>
 
 ## Parameters
 
-| Parameter           | Description                                                                                                                                                     |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `columnCount`       | Controls how many children are laid out in a row. Defaults to 2.                                                                                                |
-| `verticalSpacing`   | Sets the vertical spacing between children. Defaults to 0.                                                                                                      |
-| `horizontalSpacing` | Sets the horizontal spacing between children. Defaults to 0.                                                                                                    |
+| Parameter           | Description                                                                                                                                                                                                    |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `columnCount`       | Controls how many children are laid out in a row. Defaults to 2.                                                                                                                                               |
+| `verticalSpacing`   | Sets the vertical spacing between children. Defaults to 0.                                                                                                                                                     |
+| `horizontalSpacing` | Sets the horizontal spacing between children. Defaults to 0.                                                                                                                                                   |
 | `enforceRowHeight`  | Whether children are set to be the height of the row they are in or can be less. Note that e.g. Containers with fixed height will be stretched out to the row's height due to using `BoxConstraints.tightFor`. |
-| `children`          | Widgets to be displayed.                                                                                                                                        |
+| `children`          | Widgets to be displayed.                                                                                                                                                                                       |
 
 ## License
 
