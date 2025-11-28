@@ -24,9 +24,9 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
     this.horizontalSpacing = 0,
     this.verticalSpacing = 0,
     this.enforceRowHeight = false,
-  })  : assert(columnCount > 0, 'columnCount must be greater than zero'),
-        assert(horizontalSpacing >= 0, 'horizontalSpacing cannot be negative'),
-        assert(verticalSpacing >= 0, 'verticalSpacing cannot be negative');
+  }) : assert(columnCount > 0, 'columnCount must be greater than zero'),
+       assert(horizontalSpacing >= 0, 'horizontalSpacing cannot be negative'),
+       assert(verticalSpacing >= 0, 'verticalSpacing cannot be negative');
 
   /// The number of columns in the grid.
   final int columnCount;
@@ -46,11 +46,11 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
 
   @override
   RenderFlexibleGrid createRenderObject(BuildContext context) => RenderFlexibleGrid(
-        columnCount: columnCount,
-        enforceRowHeight: enforceRowHeight,
-        horizontalSpacing: horizontalSpacing,
-        verticalSpacing: verticalSpacing,
-      );
+    columnCount: columnCount,
+    enforceRowHeight: enforceRowHeight,
+    horizontalSpacing: horizontalSpacing,
+    verticalSpacing: verticalSpacing,
+  );
 
   @override
   void updateRenderObject(BuildContext context, RenderFlexibleGrid renderObject) {
@@ -105,8 +105,9 @@ class RenderFlexibleGrid extends RenderBox
       final isSpanningItem = child is FlexibleGridItemProxyBox;
       final itemColumnSpan = isSpanningItem ? min(columnCount, child.columnSpan) : 1;
 
-      final childWidth =
-          isSpanningItem ? (columnWidth * itemColumnSpan) + (horizontalSpacing * (itemColumnSpan - 1)) : columnWidth;
+      final childWidth = isSpanningItem
+          ? (columnWidth * itemColumnSpan) + (horizontalSpacing * (itemColumnSpan - 1))
+          : columnWidth;
 
       // Check if the item fits in the current row
       if (currentColumn + itemColumnSpan > columnCount) {
@@ -135,8 +136,9 @@ class RenderFlexibleGrid extends RenderBox
 
             if (tempColumn + tempSpan > columnCount) break;
 
-            final tempWidth =
-                isTempSpanning ? (columnWidth * tempSpan) + (horizontalSpacing * (tempSpan - 1)) : columnWidth;
+            final tempWidth = isTempSpanning
+                ? (columnWidth * tempSpan) + (horizontalSpacing * (tempSpan - 1))
+                : columnWidth;
 
             tempChild.layout(BoxConstraints(maxWidth: tempWidth), parentUsesSize: true);
             if (tempChild.size.height > tempMaxHeight) {

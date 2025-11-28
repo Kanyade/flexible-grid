@@ -182,8 +182,9 @@ void main() {
       expect(span1Rect.width, normalRect.width);
     });
 
-    testWidgets('FlexibleGridItemProxy widget placed as the first child spans expected number of columns',
-        (tester) async {
+    testWidgets('FlexibleGridItemProxy widget placed as the first child spans expected number of columns', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -217,8 +218,9 @@ void main() {
       expect(span2Rect.width, expectedWidth);
     });
 
-    testWidgets('FlexibleGridItemProxy widget placed in the middle of a row fits correctly if space remains',
-        (tester) async {
+    testWidgets('FlexibleGridItemProxy widget placed in the middle of a row fits correctly if space remains', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -253,8 +255,9 @@ void main() {
       expect(span2.dx, lessThan(item2.dx));
     });
 
-    testWidgets('FlexibleGridItemProxy widget placed at end of row moves to next row if not enough remaining columns',
-        (tester) async {
+    testWidgets('FlexibleGridItemProxy widget placed at end of row moves to next row if not enough remaining columns', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -349,49 +352,51 @@ void main() {
 
   group('4. Spacing + FlexibleGridItemProxy Interaction:', () {
     testWidgets(
-        'Horizontal spacing applied correctly for FlexibleGridItemProxy widgets (no spacing inside their span area)',
-        (tester) async {
-      const horizontalSpacing = 20.0;
+      'Horizontal spacing applied correctly for FlexibleGridItemProxy widgets (no spacing inside their span area)',
+      (tester) async {
+        const horizontalSpacing = 20.0;
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: SizedBox(
-              width: 420,
-              child: FlexibleGrid(
-                columnCount: 3,
-                horizontalSpacing: horizontalSpacing,
-                children: [
-                  FlexibleGridItemProxy(
-                    columnSpan: 2,
-                    child: Container(key: const Key('span2'), height: 50, color: Colors.red),
-                  ),
-                  Container(key: const Key('item1'), height: 50, color: Colors.blue),
-                ],
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: SizedBox(
+                width: 420,
+                child: FlexibleGrid(
+                  columnCount: 3,
+                  horizontalSpacing: horizontalSpacing,
+                  children: [
+                    FlexibleGridItemProxy(
+                      columnSpan: 2,
+                      child: Container(key: const Key('span2'), height: 50, color: Colors.red),
+                    ),
+                    Container(key: const Key('item1'), height: 50, color: Colors.blue),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      final span2Rect = tester.getRect(find.byKey(const Key('span2')));
-      final item1Rect = tester.getRect(find.byKey(const Key('item1')));
+        final span2Rect = tester.getRect(find.byKey(const Key('span2')));
+        final item1Rect = tester.getRect(find.byKey(const Key('item1')));
 
-      // Calculate spacing between span widget and next item
-      final actualSpacing = item1Rect.left - span2Rect.right;
-      expect(actualSpacing, horizontalSpacing);
+        // Calculate spacing between span widget and next item
+        final actualSpacing = item1Rect.left - span2Rect.right;
+        expect(actualSpacing, horizontalSpacing);
 
-      // Span widget should include spacing in its width calculation
-      // Width = 2 * columnWidth + 1 * spacing (between the 2 columns it spans)
-      final columnWidth = (420 - (2 * horizontalSpacing)) / 3;
-      final expectedSpanWidth = (2 * columnWidth) + horizontalSpacing;
-      expect(span2Rect.width, expectedSpanWidth);
-    });
+        // Span widget should include spacing in its width calculation
+        // Width = 2 * columnWidth + 1 * spacing (between the 2 columns it spans)
+        final columnWidth = (420 - (2 * horizontalSpacing)) / 3;
+        final expectedSpanWidth = (2 * columnWidth) + horizontalSpacing;
+        expect(span2Rect.width, expectedSpanWidth);
+      },
+    );
   });
 
   group('5. enforceRowHeight Behavior:', () {
-    testWidgets('When enforceRowHeight = false, each item\'s height is based on its own intrinsic height',
-        (tester) async {
+    testWidgets('When enforceRowHeight = false, each item\'s height is based on its own intrinsic height', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -531,8 +536,9 @@ void main() {
       expect(span2Rect.width, equals(400));
     });
 
-    testWidgets('columnCount = large number (e.g., 10) — ensure spans still respected and layout remains correct',
-        (tester) async {
+    testWidgets('columnCount = large number (e.g., 10) — ensure spans still respected and layout remains correct', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

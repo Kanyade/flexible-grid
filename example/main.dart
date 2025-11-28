@@ -20,7 +20,13 @@ class Demo extends StatelessWidget {
           columnCount: 3,
           enforceRowHeight: true,
           children: [
-            FlexibleGridItemProxy(columnSpan: 2, child: Container(color: Colors.green, height: 100)),
+            FlexibleGridItemProxy(
+              columnSpan: 2,
+              child: Container(
+                color: Colors.green,
+                height: 100,
+              ),
+            ),
             Container(color: Colors.red, height: 75),
             Container(color: Colors.blue, height: 150),
             Container(color: Colors.yellow, height: 125),
