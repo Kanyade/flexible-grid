@@ -13,6 +13,7 @@ It does not have inherent scrolling, you need to handle that, this is truly a ba
 FlexibleGrid(
   columnCount: 3,
   enforceRowHeight: true,
+  useTightConstraints: true,
   children: [
     FlexibleGridItemProxy(columnSpan: 2, child: Container(color: Colors.green, height: 100)),
     Container(color: Colors.red, height: 75),
@@ -25,8 +26,8 @@ FlexibleGrid(
 
 <table>
 <tr>
-<td>When <code>enforceRowHeight</code> is true:</td>
-<td>When <code>enforceRowHeight</code> is false:</td>
+<td>When <code>enforceRowHeight & useTightConstraints</code> is true:</td>
+<td>When <code>enforceRowHeight & useTightConstraints</code> is false:</td>
 </tr>
 <tr>
 <td><img src="https://raw.githubusercontent.com/Kanyade/flexible-grid/refs/heads/master/example/flexible_grid_demo_enforced.png" alt="FlexibleGrid Demo Enforced" width="260"></td>
@@ -36,13 +37,14 @@ FlexibleGrid(
 
 ## Parameters
 
-| Parameter           | Description                                                                                                                                                                                                    |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `columnCount`       | Controls how many children are laid out in a row. Defaults to 2. Must be greater than 0.                                                                                                                       |
-| `verticalSpacing`   | Sets the vertical spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                             |
-| `horizontalSpacing` | Sets the horizontal spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                           |
-| `enforceRowHeight`  | Whether children are set to be the height of the row they are in or can be less. Note that e.g. Containers with fixed height will be stretched out to the row's height due to using `BoxConstraints.tightFor`. |
-| `children`          | Widgets to be displayed.                                                                                                                                                                                       |
+| Parameter             | Description                                                                                                                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `columnCount`         | Controls how many children are laid out in a row. Defaults to 2. Must be greater than 0.                                                                                                                                     |
+| `verticalSpacing`     | Sets the vertical spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                                           |
+| `horizontalSpacing`   | Sets the horizontal spacing between children. Defaults to 0. Must be greater than 0.                                                                                                                                         |
+| `enforceRowHeight`    | Whether children are set to be the height of the row they are in or can be less.                                                                                                                                             |
+| `useTightConstraints` | Whether children will be stretched out even with fixed size due to using `BoxConstraints.tightFor`. With this, you need to rebuild the grid yourself when item sizes change, as the grid won't repaint itself automatically. |
+| `children`            | Widgets to be displayed.                                                                                                                                                                                                     |
 
 ## FlexibleGridItemProxy
 

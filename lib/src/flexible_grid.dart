@@ -24,6 +24,7 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
     this.horizontalSpacing = 0,
     this.verticalSpacing = 0,
     this.enforceRowHeight = false,
+    this.useTightConstraints = false,
   }) : assert(columnCount > 0, 'columnCount must be greater than zero'),
        assert(horizontalSpacing >= 0, 'horizontalSpacing cannot be negative'),
        assert(verticalSpacing >= 0, 'verticalSpacing cannot be negative');
@@ -35,8 +36,17 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
   /// If true, all items in a row will have the same height.
   /// If false, items can have varying heights.
   /// Defaults to false.
-  /// Note that items with exact heights won't be stretched.
+  /// Check out [useTightConstraints] for more control over item sizing.
   final bool enforceRowHeight;
+
+  /// Whether to use tight constraints for grid items.
+  /// If true, items will be forced to fill their allocated space and cannot request more.
+  /// Defaults to false.
+  /// Only applicable when [enforceRowHeight] is true.
+  /// If you are using this option, you need to rebuild the grid when item sizes change
+  /// yourself, as the grid won't repaint itself automatically.
+  /// This is useful to stretch out items with fixed sizes to fill the grid space.
+  final bool useTightConstraints;
 
   /// The horizontal spacing between grid items.
   final double horizontalSpacing;
@@ -48,6 +58,7 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
   RenderFlexibleGrid createRenderObject(BuildContext context) => RenderFlexibleGrid(
     columnCount: columnCount,
     enforceRowHeight: enforceRowHeight,
+    useTightConstraints: useTightConstraints,
     horizontalSpacing: horizontalSpacing,
     verticalSpacing: verticalSpacing,
   );
@@ -58,7 +69,8 @@ class FlexibleGrid extends MultiChildRenderObjectWidget {
       ..columnCount = columnCount
       ..horizontalSpacing = horizontalSpacing
       ..verticalSpacing = verticalSpacing
-      ..enforceRowHeight = enforceRowHeight;
+      ..enforceRowHeight = enforceRowHeight
+      ..useTightConstraints = useTightConstraints;
   }
 }
 
@@ -69,12 +81,14 @@ class RenderFlexibleGrid extends RenderBox
   RenderFlexibleGrid({
     required this.columnCount,
     required this.enforceRowHeight,
+    required this.useTightConstraints,
     required this.horizontalSpacing,
     required this.verticalSpacing,
   });
 
   int columnCount;
   bool enforceRowHeight;
+  bool useTightConstraints;
   double horizontalSpacing;
   double verticalSpacing;
 
@@ -158,9 +172,10 @@ class RenderFlexibleGrid extends RenderBox
         rowHeight = constraints.maxHeight;
       }
 
-      final childConstraints = enforceRowHeight && itemColumnSpan < columnCount
-          ? BoxConstraints.tightFor(width: childWidth, height: rowHeight)
-          : BoxConstraints(maxWidth: childWidth, maxHeight: rowHeight);
+      final childConstraints = switch ((enforceRowHeight, itemColumnSpan < columnCount, useTightConstraints)) {
+        (true, true, true) => BoxConstraints.tightFor(width: childWidth, height: rowHeight),
+        _ => BoxConstraints(maxWidth: childWidth, maxHeight: rowHeight),
+      };
 
       child.layout(childConstraints, parentUsesSize: true);
       childParentData.offset = Offset(x, y);

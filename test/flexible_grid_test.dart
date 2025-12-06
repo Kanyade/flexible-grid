@@ -428,69 +428,137 @@ void main() {
       expect(item1Rect.height, equals(100));
     });
 
-    testWidgets('When enforceRowHeight = true, all items in a row match the tallest item in that row', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: FlexibleGrid(
-              columnCount: 2,
-              enforceRowHeight: true,
-              children: [
-                // Unbounded Align has the child with smaller height in the row
-                Align(
-                  key: const Key('item0'),
-                  alignment: Alignment.topCenter,
-                  child: Container(height: 50, color: Colors.red),
-                ),
-                Container(
-                  key: const Key('item1'),
-                  height: 100,
-                  color: Colors.blue,
-                ),
-                // Unbounded Align has the child with bigger height in the row
-                Align(
-                  key: const Key('item2'),
-                  alignment: Alignment.topCenter,
-                  child: Container(height: 75, color: Colors.yellow),
-                ),
-                Container(
-                  key: const Key('item3'),
-                  height: 60,
-                  color: Colors.green,
-                ),
-                // Simple containers in the last row
-                Container(
-                  key: const Key('item4'),
-                  height: 40,
-                  color: Colors.green,
-                ),
-                Container(
-                  key: const Key('item5'),
-                  height: 20,
-                  color: Colors.green,
-                ),
-              ],
+    testWidgets(
+      'When enforceRowHeight = true & useTightConstraints = true, all items in a row match the tallest item in that row with modifying their intrinsic heights if they have any',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: FlexibleGrid(
+                columnCount: 2,
+                enforceRowHeight: true,
+                useTightConstraints: true,
+                children: [
+                  // Unbounded Align has the child with smaller height in the row
+                  Align(
+                    key: const Key('item0'),
+                    alignment: Alignment.topCenter,
+                    child: Container(height: 50, color: Colors.red),
+                  ),
+                  Container(
+                    key: const Key('item1'),
+                    height: 100,
+                    color: Colors.blue,
+                  ),
+                  // Unbounded Align has the child with bigger height in the row
+                  Align(
+                    key: const Key('item2'),
+                    alignment: Alignment.topCenter,
+                    child: Container(height: 75, color: Colors.yellow),
+                  ),
+                  Container(
+                    key: const Key('item3'),
+                    height: 60,
+                    color: Colors.green,
+                  ),
+                  // Simple containers in the last row
+                  Container(
+                    key: const Key('item4'),
+                    height: 40,
+                    color: Colors.green,
+                  ),
+                  Container(
+                    key: const Key('item5'),
+                    height: 20,
+                    color: Colors.green,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      final item0Rect = tester.getRect(find.byKey(const Key('item0')));
-      final item1Rect = tester.getRect(find.byKey(const Key('item1')));
-      final item2Rect = tester.getRect(find.byKey(const Key('item2')));
-      final item3Rect = tester.getRect(find.byKey(const Key('item3')));
-      final item4Rect = tester.getRect(find.byKey(const Key('item4')));
-      final item5Rect = tester.getRect(find.byKey(const Key('item5')));
+        final item0Rect = tester.getRect(find.byKey(const Key('item0')));
+        final item1Rect = tester.getRect(find.byKey(const Key('item1')));
+        final item2Rect = tester.getRect(find.byKey(const Key('item2')));
+        final item3Rect = tester.getRect(find.byKey(const Key('item3')));
+        final item4Rect = tester.getRect(find.byKey(const Key('item4')));
+        final item5Rect = tester.getRect(find.byKey(const Key('item5')));
 
-      expect(item0Rect.height, equals(100));
-      expect(item1Rect.height, equals(100));
+        expect(item0Rect.height, equals(100));
+        expect(item1Rect.height, equals(100));
 
-      expect(item2Rect.height, equals(75));
-      expect(item3Rect.height, equals(75));
+        expect(item2Rect.height, equals(75));
+        expect(item3Rect.height, equals(75));
 
-      expect(item4Rect.height, equals(40));
-      expect(item5Rect.height, equals(40));
-    });
+        expect(item4Rect.height, equals(40));
+        expect(item5Rect.height, equals(40));
+      },
+    );
+
+    testWidgets(
+      'When enforceRowHeight = true & useTightConstraints = false, all items in a row match the tallest item in that row without modifying their intrinsic heights if they have any',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: FlexibleGrid(
+                columnCount: 2,
+                enforceRowHeight: true,
+                children: [
+                  Container(
+                    key: const Key('item0'),
+                    alignment: Alignment.center,
+                    child: Text('item0'),
+                  ),
+                  Container(
+                    key: const Key('item1'),
+                    height: 100,
+                    color: Colors.blue,
+                  ),
+                  SizedBox(
+                    key: const Key('item2'),
+                    height: 100,
+                    child: Text('item2'),
+                  ),
+                  Container(
+                    key: const Key('item3'),
+                    alignment: Alignment.center,
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    key: const Key('item4'),
+                    height: 40,
+                    color: Colors.green,
+                  ),
+                  Container(
+                    key: const Key('item5'),
+                    height: 20,
+                    color: Colors.green,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        final item0Rect = tester.getRect(find.byKey(const Key('item0')));
+        final item1Rect = tester.getRect(find.byKey(const Key('item1')));
+        final item2Rect = tester.getRect(find.byKey(const Key('item2')));
+        final item3Rect = tester.getRect(find.byKey(const Key('item3')));
+        final item4Rect = tester.getRect(find.byKey(const Key('item4')));
+        final item5Rect = tester.getRect(find.byKey(const Key('item5')));
+
+        expect(item0Rect.height, equals(100));
+        expect(item1Rect.height, equals(100));
+
+        expect(item2Rect.height, equals(100));
+        expect(item3Rect.height, equals(100));
+
+        expect(item4Rect.height, equals(40));
+        expect(item5Rect.height, equals(20));
+      },
+    );
   });
 
   group('6. Behavior With Different Column Counts:', () {
