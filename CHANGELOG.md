@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- Minor README change
+
 ## 0.3.0
 
 - Added `useTightConstraints` parameter
